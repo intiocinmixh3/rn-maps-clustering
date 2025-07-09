@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
+```
 ## 🎨 Customization
 
 You can easily customize the appearance of clusters and handle press events.
