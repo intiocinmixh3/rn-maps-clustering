@@ -1,132 +1,90 @@
-# Contributing
+# Contributing to RN Super Cluster
 
-Contributions are always welcome, no matter how large or small!
+First off, thank you for considering contributing to `RN Maps Clustering`! Your help is greatly appreciated. Any contribution, no matter how small, is welcome.
 
-We want this community to be friendly and respectful to each other. Please follow it in all your interactions with the project. Before contributing, please read the [code of conduct](./CODE_OF_CONDUCT.md).
+## How Can I Contribute?
 
-## Development workflow
+### 🐛 Reporting Bugs
 
-This project is a monorepo managed using [Yarn workspaces](https://yarnpkg.com/features/workspaces). It contains the following packages:
+If you find a bug, please create a new issue in the [GitHub Issues](https://github.com/suwi-lanji/rn-maps-clustering/issues) section.
 
-- The library package in the root directory.
-- An example app in the `example/` directory.
+Please include as much detail as possible in your bug report:
+- A clear and descriptive title.
+- A detailed description of the problem.
+- Steps to reproduce the bug.
+- What you expected to happen vs. what actually happened.
+- Screenshots or GIFs if applicable.
+- Information about your environment (React Native version, library version, platform, etc.).
 
-To get started with the project, run `yarn` in the root directory to install the required dependencies for each package:
+### ✨ Suggesting Enhancements
 
-```sh
-yarn
-```
+If you have an idea for a new feature or an improvement to an existing one, please open an issue to discuss it. This allows us to coordinate efforts and ensure the feature aligns with the project's goals.
 
-> Since the project relies on Yarn workspaces, you cannot use [`npm`](https://github.com/npm/cli) for development.
+### 💻 Pull Requests
 
-The [example app](/example/) demonstrates usage of the library. You need to run it to test any changes you make.
+We welcome pull requests! If you're ready to contribute code, please follow these steps:
 
-It is configured to use the local version of the library, so any changes you make to the library's source code will be reflected in the example app. Changes to the library's JavaScript code will be reflected in the example app without a rebuild, but native code changes will require a rebuild of the example app.
+1.  **Fork the Repository**
+    Click the "Fork" button at the top right of the repository page.
 
-You can use various commands from the root directory to work with the project.
+2.  **Clone Your Fork**
+    Clone your forked repository to your local machine.
+    ```bash
+    git clone https://github.com/your-username/rn-maps-clustering.git
+    cd rn-maps-clustering
+    ```
 
-To start the packager:
+3.  **Set Up the Development Environment**
+    This project uses `pnpm` for package management. This single command will install dependencies for the root library and the example app.
+    ```bash
+    pnpm install
+    ```
 
-```sh
-yarn example start
-```
+4.  **Create a New Branch**
+    Create a new branch for your feature or bug fix. Use a descriptive name.
+    ```bash
+    git checkout -b feature/my-awesome-feature
+    # or
+    git checkout -b fix/resolve-map-issue
+    ```
 
-To run the example app on Android:
+5.  **Make Your Changes**
+    Write your code! Make sure to follow the existing code style. All source code for the library is in the `src/` directory.
 
-```sh
-yarn example android
-```
+6.  **Test Your Changes**
+    You can test your changes live in the `example/` app.
+    ```bash
+    # From the root directory
+    pnpm example start
+    ```
+    This will start the Metro server for the example app, which you can run on a simulator or device.
 
-To run the example app on iOS:
+7.  **Lint and Type-Check**
+    Before committing, make sure your code passes the linter and TypeScript checks.
+    ```bash
+    # Run ESLint to check for code style issues
+    pnpm lint
 
-```sh
-yarn example ios
-```
+    # Run the TypeScript compiler to check for type errors
+    pnpm typecheck
+    ```
 
-To confirm that the app is running with the new architecture, you can check the Metro logs for a message like this:
+8.  **Commit Your Changes**
+    Use a clear and descriptive commit message. This project follows the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+    ```bash
+    git commit -m "feat: Add custom animation support for clusters"
+    ```
 
-```sh
-Running "RnMapsClusteringExample" with {"fabric":true,"initialProps":{"concurrentRoot":true},"rootTag":1}
-```
+9.  **Push to Your Fork**
+    ```bash
+    git push origin feature/my-awesome-feature
+    ```
 
-Note the `"fabric":true` and `"concurrentRoot":true` properties.
+10. **Open a Pull Request**
+    Go to the original repository on GitHub and open a pull request from your forked branch. Provide a clear description of the changes you've made.
 
-To run the example app on Web:
+## Code of Conduct
 
-```sh
-yarn example web
-```
+Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
 
-Make sure your code passes TypeScript and ESLint. Run the following to verify:
-
-```sh
-yarn typecheck
-yarn lint
-```
-
-To fix formatting errors, run the following:
-
-```sh
-yarn lint --fix
-```
-
-Remember to add tests for your change if possible. Run the unit tests by:
-
-```sh
-yarn test
-```
-
-### Commit message convention
-
-We follow the [conventional commits specification](https://www.conventionalcommits.org/en) for our commit messages:
-
-- `fix`: bug fixes, e.g. fix crash due to deprecated method.
-- `feat`: new features, e.g. add new method to the module.
-- `refactor`: code refactor, e.g. migrate from class components to hooks.
-- `docs`: changes into documentation, e.g. add usage example for the module..
-- `test`: adding or updating tests, e.g. add integration tests using detox.
-- `chore`: tooling changes, e.g. change CI config.
-
-Our pre-commit hooks verify that your commit message matches this format when committing.
-
-### Linting and tests
-
-[ESLint](https://eslint.org/), [Prettier](https://prettier.io/), [TypeScript](https://www.typescriptlang.org/)
-
-We use [TypeScript](https://www.typescriptlang.org/) for type checking, [ESLint](https://eslint.org/) with [Prettier](https://prettier.io/) for linting and formatting the code, and [Jest](https://jestjs.io/) for testing.
-
-Our pre-commit hooks verify that the linter and tests pass when committing.
-
-### Publishing to npm
-
-We use [release-it](https://github.com/release-it/release-it) to make it easier to publish new versions. It handles common tasks like bumping version based on semver, creating tags and releases etc.
-
-To publish new versions, run the following:
-
-```sh
-yarn release
-```
-
-### Scripts
-
-The `package.json` file contains various scripts for common tasks:
-
-- `yarn`: setup project by installing dependencies.
-- `yarn typecheck`: type-check files with TypeScript.
-- `yarn lint`: lint files with ESLint.
-- `yarn test`: run unit tests with Jest.
-- `yarn example start`: start the Metro server for the example app.
-- `yarn example android`: run the example app on Android.
-- `yarn example ios`: run the example app on iOS.
-
-### Sending a pull request
-
-> **Working on your first pull request?** You can learn how from this _free_ series: [How to Contribute to an Open Source Project on GitHub](https://app.egghead.io/playlists/how-to-contribute-to-an-open-source-project-on-github).
-
-When you're sending a pull request:
-
-- Prefer small pull requests focused on one change.
-- Verify that linters and tests are passing.
-- Review the documentation to make sure it looks good.
-- Follow the pull request template when opening a pull request.
-- For pull requests that change the API or implementation, discuss with maintainers first by opening an issue.
+Thank you again for your contribution!
