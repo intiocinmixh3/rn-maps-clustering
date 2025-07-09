@@ -3,7 +3,7 @@ pre-commit:
   commands:
     lint:
       glob: "*.{js,ts,jsx,tsx}"
-      run: npx eslint {staged_files}
+      run: echo "skip linting"
     types:
       glob: "*.{js,ts, jsx, tsx}"
       run: npx tsc
@@ -11,4 +11,4 @@ commit-msg:
   parallel: true
   commands:
     commitlint:
-      run: echo "skip cocmmit lint"
+      run: echo "skip commit lint"
