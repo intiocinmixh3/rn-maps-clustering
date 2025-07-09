@@ -1,4 +1,14 @@
 {
-  "extends": "./tsconfig",
-  "exclude": ["example", "lib"]
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+  },
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "example",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }

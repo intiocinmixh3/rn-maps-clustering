@@ -12,11 +12,6 @@ npm install rn-maps-clustering
 
 
 ```js
-import { multiply } from 'rn-maps-clustering';
-
-// ...
-
-const result = await multiply(3, 7);
 ```
 
 
@@ -29,5 +24,3 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 MIT
 
 ---
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
